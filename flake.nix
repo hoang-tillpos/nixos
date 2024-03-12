@@ -5,6 +5,7 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-23.11";
     }; 
+
     # home-manager, used for managing user configuration
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
@@ -13,17 +14,27 @@
       # the `inputs.nixpkgs` of the current flake,
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    fenix = {
+      url = "github:nix-community/fenix/monthly";
+      inputs.nixpkgs.follows = "nixpkgs";
     };  
   };
 
   # The `self` parameter is special, it refers to
   # the attribute set returned by the `outputs` function itself.
-  outputs = inputs@{ nixpkgs, home-manager, ... }: {    
+  outputs = inputs@{ nixpkgs, home-manager, fenix, ... }: {    
+    nixpkgs.overlays = [
+      (_: super: let pkgs = fenix.inputs.nixpkgs.legacyPackages.${super.system}; in fenix.overlays.default pkgs pkgs)
+    ];
+
+    packages.x86_64-linux.default = fenix.packages.x86_64-linux.default.toolchain;
+
     nixosConfigurations.hle-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-	(import ./fenix/default.nix)
 		
 	# make home-manager as a module of nixos
         # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
@@ -32,11 +43,18 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
 
-          # TODO replace ryan with your own username
           home-manager.users.hle = import ./home.nix;
 
           # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
         }
+
+	#
+	({ pkgs, ... }: {
+          nixpkgs.overlays = [ fenix.overlays.default ];
+        })
+
+
+
       ];
     };
   };
