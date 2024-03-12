@@ -39,7 +39,7 @@
 
     # text editor
     vscode
-    #postman
+    postman
     obsidian
     gh
     insomnia

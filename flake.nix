@@ -3,34 +3,23 @@
 
   inputs = {
     nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-23.11";
+      url = "github:nixos/nixpkgs/nixos-unstable";
     }; 
 
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with
       # the `inputs.nixpkgs` of the current flake,
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    fenix = {
-      url = "github:nix-community/fenix/monthly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };  
   };
 
   # The `self` parameter is special, it refers to
   # the attribute set returned by the `outputs` function itself.
   outputs = inputs@{ nixpkgs, home-manager, fenix, ... }: {    
-    nixpkgs.overlays = [
-      (_: super: let pkgs = fenix.inputs.nixpkgs.legacyPackages.${super.system}; in fenix.overlays.default pkgs pkgs)
-    ];
-
-    packages.x86_64-linux.default = fenix.packages.x86_64-linux.default.toolchain;
-
     nixosConfigurations.hle-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -49,9 +38,6 @@
         }
 
 	#
-	({ pkgs, ... }: {
-          nixpkgs.overlays = [ fenix.overlays.default ];
-        })
 
 
 
