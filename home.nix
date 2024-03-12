@@ -30,6 +30,7 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # scripting
+    git
     go
     python312
     bun
@@ -134,11 +135,11 @@
   
 
   # basic configuration of git, please change to your own
-  programs.git = {
-    enable = true;
-    userName = "Hoang Le";
-    userEmail = "hoang.b.le.au@gmail.com";
-  };
+  #programs.git = {
+  #  enable = true;
+  #  userName = "Hoang Le";
+  #  userEmail = "hoang.b.le.au@gmail.com";
+  #};
 
   # starship - an customizable prompt for any shell
   programs.starship = {
