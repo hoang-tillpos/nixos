@@ -108,7 +108,7 @@
     curl
     #hyprland stuff
     #wireplumber
-    xdg-desktop-portal-hyprland
+    #xdg-desktop-portal-hyprland
   ];
 
   environment.variables.EDITOR = "vim";
