@@ -43,7 +43,8 @@
     fish
     
     # wm
-    i3 
+    waybar
+    swaylock 
 
     # text editor
     vscode
