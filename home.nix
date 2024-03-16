@@ -40,10 +40,11 @@
     direnv
     
     #terminals
+    fish
     alacritty
     starship
-    bash
-    fish
+    #bash
+    warp-terminal 
     
     # wm
     waybar

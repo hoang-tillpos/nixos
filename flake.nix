@@ -19,7 +19,7 @@
 
   # The `self` parameter is special, it refers to
   # the attribute set returned by the `outputs` function itself.
-  outputs = inputs@{ nixpkgs, home-manager, fenix, ... }: {    
+  outputs = inputs@{ nixpkgs, home-manager, ... }: {    
     nixosConfigurations.hle-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
