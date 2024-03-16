@@ -49,10 +49,10 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  #services.xserver.videoDrivers = [ "amdgpu" ];
 
   # use hyprland DE instead, un-Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.plasma5.enable = true;
   programs.hyprland.enable = true;
 
@@ -100,7 +100,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
-      kate
+    #  kate
     #  thunderbird
     ];
   };
