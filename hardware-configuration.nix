@@ -9,17 +9,17 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/39005d61-6c2b-4dfb-908c-0d3d1a80d798";
+    { device = "/dev/disk/by-uuid/a1bd3740-19a8-496a-8090-0c5d207e80a2";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6458-2591";
+    { device = "/dev/disk/by-uuid/81E4-9BA3";
       fsType = "vfat";
     };
 

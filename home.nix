@@ -29,6 +29,9 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
+    # os stuff
+    appimage-run
+    
     # scripting
     git
     go
