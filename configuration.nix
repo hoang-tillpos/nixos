@@ -4,6 +4,12 @@
 
 { config, pkgs, ... }:
 
+
+# tracking TODO: bring these to separate nix
+# 1. hyprland
+# 2. printing
+# 3. fonts
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -46,6 +52,21 @@
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
   };
+
+  #TODO: bring this out to flake
+  fonts = {
+        enableDefaultPackages = true;
+        fontDir.enable = true;
+
+        packages = with pkgs; [
+            #(nerdfonts.override { fonts = [
+            #    "SpaceMono" 
+            #    "JetBrainsMono"
+            #    "DejaVuSansMono"
+            # ]; })
+	    nerdfonts
+        ];
+    };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;

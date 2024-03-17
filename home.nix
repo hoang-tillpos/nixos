@@ -39,19 +39,32 @@
     bun
     direnv
     
+    #dev stuff
+    awscli2
+    kubectl
+    
     #terminals
     fish
     alacritty
     starship
     #bash
-    warp-terminal 
+    #warp-terminal 
     
-    # wm
+    # hyprland stuff
     waybar
-    swaylock 
+    wlogout 
+    hyprlock
+    hyprshot
+    swaynotificationcenter
+    swayidle
+    pavucontrol
+    libnotify
+    pamixer
+    
 
-    # text editor
-    vscode
+    # code editor
+    #vscode
+    neovim
     postman
     obsidian
     gh
@@ -138,6 +151,37 @@
     # 
     
   ];
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode.fhs;
+    extensions = with pkgs.vscode-extensions; [
+	golang.go
+	dbaeumer.vscode-eslint
+	bierner.markdown-mermaid
+	yzhang.markdown-all-in-one
+	sumneko.lua
+	ms-pyright.pyright
+	ms-python.vscode-pylance
+	ms-python.black-formatter
+	njpwerner.autodocstring
+	skyapps.fish-vscode
+	mads-hartmann.bash-ide-vscode
+	davidanson.vscode-markdownlint
+	graphql.vscode-graphql-syntax
+	redhat.vscode-yaml
+	bbenoist.nix
+	wholroyd.jinja
+    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+     {
+         name = "codeium";
+         publisher = "Codeium";
+         version = "1.8.1";
+         sha256 = "sha256-6PLn7g/znfc2uruYTqxQ96IwXxfz6Sbguua3YqZd64U=";
+     }
+    ];
+
+  };
 
   #configuring xsession + i3
   #xsession = {
