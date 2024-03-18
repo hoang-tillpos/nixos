@@ -146,8 +146,7 @@
     usbutils # lsusb
     
     #hyprland stuff
-    dolphin
-    wofi 
+    wofi
     # 
     
   ];
