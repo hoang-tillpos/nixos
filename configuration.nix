@@ -128,10 +128,15 @@
     ];
   };
 
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  programs.thunar.enable = true;
+  services.gvfs.enable = true;
+  services.devmon.enable = true;
+  services.udisks2.enable = true;
   environment.systemPackages = with pkgs; [
     git    
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -140,11 +145,12 @@
     #hyprland stuff
     wireplumber
     xdg-desktop-portal-hyprland
+    xfce.thunar-volman
   ];
 
   environment.variables.EDITOR = "vim";
 
-  programs.thunar.enable = true;
+  
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "hle" ];
 
