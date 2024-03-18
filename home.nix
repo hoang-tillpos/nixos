@@ -157,6 +157,7 @@
     extensions = with pkgs.vscode-extensions; [
 	golang.go
 	dbaeumer.vscode-eslint
+	esbenp.prettier-vscode
 	bierner.markdown-mermaid
 	yzhang.markdown-all-in-one
 	sumneko.lua
