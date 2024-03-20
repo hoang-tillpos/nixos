@@ -31,7 +31,6 @@
   home.packages = with pkgs; [
     # os stuff
     appimage-run
-    fh
     
     # scripting and run-time
     git
@@ -40,8 +39,8 @@
     bun
     direnv
     lazygit
-    npm
-    yarn4
+    nodejs_21
+    yarn-berry
     
     
     #dev stuff
