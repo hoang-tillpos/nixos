@@ -64,7 +64,8 @@
             #    "JetBrainsMono"
             #    "DejaVuSansMono"
             # ]; })
-	    nerdfonts
+	          nerdfonts
+            monaspace
         ];
     };
 

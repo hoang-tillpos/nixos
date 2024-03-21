@@ -160,29 +160,30 @@
     enable = true;
     package = pkgs.vscode.fhs;
     extensions = with pkgs.vscode-extensions; [
-	golang.go
-	dbaeumer.vscode-eslint
-	esbenp.prettier-vscode
-	bierner.markdown-mermaid
-	yzhang.markdown-all-in-one
-	sumneko.lua
-	ms-pyright.pyright
-	ms-python.vscode-pylance
-	ms-python.black-formatter
-	njpwerner.autodocstring
-	skyapps.fish-vscode
-	mads-hartmann.bash-ide-vscode
-	davidanson.vscode-markdownlint
-	graphql.vscode-graphql-syntax
-	redhat.vscode-yaml
-	bbenoist.nix
-	wholroyd.jinja
+      golang.go
+      dbaeumer.vscode-eslint
+      esbenp.prettier-vscode
+      bierner.markdown-mermaid
+      yzhang.markdown-all-in-one
+      sumneko.lua
+      ms-pyright.pyright
+      ms-python.vscode-pylance
+      ms-python.black-formatter
+      njpwerner.autodocstring
+      skyapps.fish-vscode
+      mads-hartmann.bash-ide-vscode
+      davidanson.vscode-markdownlint
+      graphql.vscode-graphql-syntax
+      redhat.vscode-yaml
+      bbenoist.nix
+      wholroyd.jinja
+      github.github-vscode-theme
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
      {
-         name = "codeium";
-         publisher = "Codeium";
-         version = "1.8.1";
-         sha256 = "sha256-6PLn7g/znfc2uruYTqxQ96IwXxfz6Sbguua3YqZd64U=";
+        name = "codeium";
+        publisher = "Codeium";
+        version = "1.8.1";
+        sha256 = "sha256-6PLn7g/znfc2uruYTqxQ96IwXxfz6Sbguua3YqZd64U=";
      }
     ];
 
