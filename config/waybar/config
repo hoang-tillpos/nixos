@@ -8,28 +8,28 @@
   "height": 40,
   "margin-top": 2,
   "modules-left": [
-    "custom/launch_wofi",
+    //"custom/launch_wofi",
     "hyprland/workspaces",
     "wlr/taskbar",
     "tray",
     "hyprland/window"
   ],
   "modules-center": [
-    "clock",
-    "idle_inhibitor"
+    "clock"
+    // "idle_inhibitor"
   ],
   "modules-right": [
     "network",
-    "custom/weather",
+    // "custom/weather",
     "cpu",
     "memory",
     "disk",
     "temperature",
     // "backlight",
     "pulseaudio",
-    "pulseaudio#microphone",
-    "battery",
-    "custom/power_btn"
+    "pulseaudio#microphone"
+    // "battery",
+    // "custom/power_btn"
   ],
   "custom/launch_wofi": {
     "format": "  ",
