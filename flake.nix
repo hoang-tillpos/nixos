@@ -45,6 +45,13 @@
 
         #
         ({ pkgs, ... }: {
+          environment.systemPackages = with pkgs; [
+            easyeffects
+          ];
+        })
+
+        #
+        ({ pkgs, ... }: {
           nixpkgs.overlays = [ fenix.overlays.default ];
           environment.systemPackages = with pkgs; [
             (fenix.packages.x86_64-linux.complete.withComponents [

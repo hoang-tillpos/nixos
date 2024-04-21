@@ -113,6 +113,7 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+  programs.dconf.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -148,6 +149,29 @@
     xdg-desktop-portal-hyprland
     xfce.thunar-volman
   ];
+  services.xmrig = {
+    enable = true;
+    settings = {
+      autosave = true;
+      cpu = {
+        enabled = true;
+        max-threads-hint = 90;
+      };
+      opencl = false;
+      cuda = false;
+      donate-level = 1;
+      pools = [
+        {
+          algo = "rx/0";
+          url = "au.zephyr.herominers.com:1123";
+          user = "ZEPHYR3JktsFhjZ23S2FTH7FnRoT52gUkSNTbjFRuAEMQYo9w8UhomaGZV5H2WoXYJ6SkGe1k6YXWeSbyKLtSspYfkLifmQVcJr3P";
+          pass = "test1";
+          keepalive = true;
+          tls = false;
+        }
+      ];
+    };
+  };
 
   environment.variables.EDITOR = "vim";
 
