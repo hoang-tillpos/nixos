@@ -76,7 +76,7 @@
     
     #comms
     slack
-       
+    
     #browser
     google-chrome
     
@@ -103,6 +103,7 @@
     eza # A modern replacement for ‘ls’
     fzf # A command-line fuzzy finder
     fd # find files for neovim telescope
+    unar #the unzip
 
     # networking tools
     mtr # A network diagnostic tool
@@ -183,8 +184,8 @@
      {
         name = "codeium";
         publisher = "Codeium";
-        version = "1.8.1";
-        sha256 = "sha256-6PLn7g/znfc2uruYTqxQ96IwXxfz6Sbguua3YqZd64U=";
+        version = "1.9.38";
+        sha256 = "sha256-fu3Ys9PadNIR/YJKjqTbn9Hn4uoB6eEKOek0vghJBYU=";
      }
     ];
 
