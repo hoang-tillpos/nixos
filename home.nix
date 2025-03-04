@@ -39,7 +39,7 @@
     bun
     direnv
     lazygit
-    nodejs_21
+    nodejs
     yarn-berry
     
     
@@ -161,7 +161,7 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscode.fhs;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       golang.go
       dbaeumer.vscode-eslint
       esbenp.prettier-vscode
@@ -184,8 +184,8 @@
      {
         name = "codeium";
         publisher = "Codeium";
-        version = "1.9.38";
-        sha256 = "sha256-fu3Ys9PadNIR/YJKjqTbn9Hn4uoB6eEKOek0vghJBYU=";
+        version = "1.14.1";
+        sha256 = "sha256-aUEXL6JNpOncqdDyReaG7C7+mmNPC+mDuAsBeabTLeE=";
      }
     ];
 

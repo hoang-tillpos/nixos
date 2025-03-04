@@ -25,6 +25,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -64,7 +65,7 @@
             #    "JetBrainsMono"
             #    "DejaVuSansMono"
             # ]; })
-	          nerdfonts
+	          nerd-fonts.droid-sans-mono
             monaspace
         ];
     };
@@ -98,8 +99,8 @@
     nssmdns4 = true;
   };
   # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  # sound.enable = true;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

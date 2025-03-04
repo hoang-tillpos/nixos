@@ -8,7 +8,6 @@
   "height": 40,
   "margin-top": 2,
   "modules-left": [
-    //"custom/launch_wofi",
     "hyprland/workspaces",
     "wlr/taskbar",
     "tray",
@@ -16,20 +15,15 @@
   ],
   "modules-center": [
     "clock"
-    // "idle_inhibitor"
   ],
   "modules-right": [
     "network",
-    // "custom/weather",
     "cpu",
     "memory",
     "disk",
     "temperature",
-    // "backlight",
     "pulseaudio",
     "pulseaudio#microphone"
-    // "battery",
-    // "custom/power_btn"
   ],
   "custom/launch_wofi": {
     "format": "  ",
@@ -92,7 +86,6 @@
     "on-click": "alacritty -e bash -c 'btop'"
   },
   "network": {
-    // "interface": "wlp4s0",
     "interval": 1,
     "format": "  {bandwidthDownBytes}    {bandwidthUpBytes}",
     "format-disconnected": " 󰞃 ",
@@ -178,10 +171,8 @@
     "tooltip": false
   },
   "clock": {
-    "interval": 1,
-    "format": "{:󰥔  %I:%M:%S %p}",
-    "tooltip-format": "{:  %A, %d-%m-%Y}",
-    "format-alt": "{:󰸗 %e %B %Y}"
+        "format": "{:%a, %d. %b %Y - %H:%M}",
+        "format-alt": "{:%H:%M}"
   },
   "hyprland/workspaces": {
     "format": "{icon}",

@@ -16,6 +16,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
+
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,6 +57,7 @@
               "rustfmt"
             ])
             rust-analyzer-nightly
+            inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
           ];
         })
       ];

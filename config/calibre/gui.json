@@ -1,4 +1,8 @@
 {
+  "book_list_pin_splitter_state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAEAAAACAAABAAAAAEYA/////wEAAAABAA=="
+  },
   "custom_colors_for_color_dialog": [
     [
       255,
@@ -97,6 +101,57 @@
       255
     ]
   ],
+  "geometry-of-calibre_main_window_geometry": {
+    "frame_geometry": {
+      "height": 929,
+      "width": 1068,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 929,
+      "width": 1068,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": true,
+    "normal_geometry": {
+      "height": 939,
+      "width": 540,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABCsAAAOgAAAAAAAAAAAAAAIbAAADqgAAAAACAAAABDgAAAAAAAAAAAAABCsAAAOg"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 1.0,
+      "geometry_in_logical_pixels": {
+        "height": 1920,
+        "width": 1080,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Lenovo Group Limited",
+      "model": "T24m-20",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1920,
+        "width": 1080
+      },
+      "virtual_geometry": {
+        "height": 1920,
+        "width": 3000,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
   "geometry-of-duplicates-question-dialog-geometry": {
     "frame_geometry": {
       "height": 378,
@@ -148,8 +203,41 @@
       }
     }
   },
+  "grid view visible": false,
   "library_usage_stats": {
-    "/home/hle/knowflakes/books/calibre": 2
+    "/home/hle/knowflakes/books/calibre": 6
   },
-  "quick_start_guide_added": true
+  "main_window_central_widget_state": {
+    "layout": "wide",
+    "narrow_desires": {
+      "book_details_height": 0.23042505592841164,
+      "cover_browser_width": 0.34953538241601145,
+      "quick_view_height": 0.25615212527964204,
+      "tag_browser_width": 0.2494639027877055
+    },
+    "narrow_visibility": {
+      "book_details": true,
+      "book_list": true,
+      "cover_browser": false,
+      "quick_view": false,
+      "tag_browser": true
+    },
+    "wide_desires": {
+      "book_details_width": 0.29949964260185846,
+      "cover_browser_height": 0.28556593977154726,
+      "quick_view_height": 0.23779854620976115,
+      "tag_browser_width": 0.29949964260185846
+    },
+    "wide_visibility": {
+      "book_details": true,
+      "book_list": true,
+      "cover_browser": false,
+      "quick_view": false,
+      "tag_browser": true
+    }
+  },
+  "quick_start_guide_added": true,
+  "qv_open_at_shutdown": false,
+  "search bar visible": true,
+  "tag browser search box visible": false
 }

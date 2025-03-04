@@ -2,6 +2,16 @@
   "add books dialog dir": "/home/hle/Downloads",
   "add books dialog dir-last-used-filter-spec-all-files": false,
   "database location dialog": "/home/hle/knowflakes/books/calibre",
+  "sort_history": [
+    [
+      "timestamp",
+      false
+    ],
+    [
+      "timestamp",
+      false
+    ]
+  ],
   "welcome_wizard_device": "kobo",
   "welcome_wizard_was_run": true
 }
