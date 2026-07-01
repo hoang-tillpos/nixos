@@ -1,3 +1,4 @@
 {
-    "editor.fontFamily": "'monaspace', monaspace, 'Droid Sans Mono', 'monospace', monospace"
+    "editor.fontFamily": "'monaspace', monaspace, 'Droid Sans Mono', 'monospace', monospace",
+    "nixEnvSelector.suggestion": false
 }

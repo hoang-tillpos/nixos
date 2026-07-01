@@ -5,6 +5,11 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     }; 
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 
     # home-manager, used for managing user configuration
     home-manager = {
@@ -26,7 +31,7 @@
 
   # The `self` parameter is special, it refers to
   # the attribute set returned by the `outputs` function itself.
-  outputs = inputs@{ nixpkgs, home-manager, fenix, ... }: {    
+  outputs = inputs@{ nixpkgs, home-manager, fenix, antigravity-nix, ... }: {    
      packages.x86_64-linux.default = fenix.packages.x86_64-linux.complete.toolchain;   
      nixosConfigurations.hle-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -39,6 +44,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "backup";
 
           home-manager.users.hle = import ./home.nix;
 
@@ -47,6 +53,7 @@
 
         #
         ({ pkgs, ... }: {
+          nixpkgs.config.android_sdk.accept_license = true;
           nixpkgs.overlays = [ fenix.overlays.default ];
           environment.systemPackages = with pkgs; [
             (fenix.packages.x86_64-linux.complete.withComponents [
@@ -56,8 +63,15 @@
               "rustc"
               "rustfmt"
             ])
+            antigravity-nix.packages.x86_64-linux.default
+            inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-ide
+            android-studio-full
+            nixfmt
+            warp-terminal
+            zed-editor
+            claude-code
             rust-analyzer-nightly
-            inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+            inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
         })
       ];

@@ -26,21 +26,29 @@
   #  "Xft.dpi" = 172;
   #};
 
+  programs.google-chrome = {
+    enable = true;
+    commandLineArgs = [
+      "--enable-features=Glic" # The internal name for the Gemini side panel
+    ];
+  };
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # os stuff
     appimage-run
-    
+
     # scripting and run-time
     git
     go
     python312
     bun
-    direnv
     lazygit
     nodejs
     yarn-berry
+    openssl
+    rclone  # Google Drive sync
+    jwt-cli # JWT decode/encode
     
     
     #dev stuff
@@ -78,16 +86,15 @@
     slack
     
     #browser
-    google-chrome
+    # google-chrome
     
     #
     libreoffice
-    calibre
  
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
 
-    neofetch
+    fastfetch
     nnn # terminal file manager
 
     # archives
@@ -158,6 +165,26 @@
     
   ];
 
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      # Download and source autocomplete.sh manually
+      if [[ ! -f ~/.local/bin/autocomplete.sh ]]; then
+        mkdir -p ~/.local/bin
+        wget -qO ~/.local/bin/autocomplete.sh https://autocomplete.sh/autocomplete.sh
+        chmod +x ~/.local/bin/autocomplete.sh
+      fi
+      source ~/.local/bin/autocomplete.sh
+      export PATH="$HOME/.local/bin:$PATH"
+    '';
+  };
+
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscode.fhs;
@@ -169,7 +196,7 @@
       yzhang.markdown-all-in-one
       sumneko.lua
       ms-pyright.pyright
-      ms-python.vscode-pylance
+      # ms-python.vscode-pylance  # Commented out due to download issues - Pyright provides similar functionality
       ms-python.black-formatter
       njpwerner.autodocstring
       skyapps.fish-vscode
@@ -180,13 +207,14 @@
       bbenoist.nix
       wholroyd.jinja
       github.github-vscode-theme
+      # codeium
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-     {
-        name = "codeium";
-        publisher = "Codeium";
-        version = "1.14.1";
-        sha256 = "sha256-aUEXL6JNpOncqdDyReaG7C7+mmNPC+mDuAsBeabTLeE=";
-     }
+    #  {
+    #     name = "codeium";
+    #     publisher = "Codeium";
+    #     version = "1.14.1";
+    #     sha256 = "sha256-aUEXL6JNpOncqdDyReaG7C7+mmNPC+mDuAsBeabTLeE=";
+    #  }
     ];
 
   };
@@ -248,6 +276,37 @@
     #};
   #};
 
+  # Google Drive sync with rclone
+  systemd.user.services.rclone-gdrive-sync = {
+    Unit = {
+      Description = "Rclone bidirectional sync for /home/hle/dev to Google Drive";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.rclone}/bin/rclone bisync hoang:dev /home/hle/dev --create-empty-src-dirs --compare size,modtime,checksum --slow-hash-sync-only --resilient -MvP --drive-skip-gdocs --max-lock 2m --exclude node_modules/** --exclude .git/** --exclude .venv/**";
+      Environment = "PATH=${pkgs.rclone}/bin";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
+
+  systemd.user.timers.rclone-gdrive-sync = {
+    Unit = {
+      Description = "Timer for rclone Google Drive sync";
+    };
+    Timer = {
+      OnBootSec = "2min";
+      OnUnitActiveSec = "5min";
+      Unit = "rclone-gdrive-sync.service";
+    };
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
+  };
+
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards
@@ -256,7 +315,9 @@
   # You can update home Manager without changing this value. See
   # the home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "23.11";
+
+
+  home.stateVersion = "26.05";
 
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;

@@ -75,8 +75,9 @@
   #services.xserver.videoDrivers = [ "amdgpu" ];
 
   # use hyprland DE instead, un-Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.displayManager.lightdm.enable = true;
+  #services.displayManager.gdm.enable = true;
+  #programs.dconf.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
   #services.xserver.desktopManager.plasma5.enable = true;
   #services.greetd.enable = true;
   programs.hyprland.enable = true;
@@ -144,10 +145,11 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
+    android-studio
     #hyprland stuff
     wireplumber
     xdg-desktop-portal-hyprland
-    xfce.thunar-volman
+    thunar-volman
   ];
 
   environment.variables.EDITOR = "vim";
@@ -170,8 +172,8 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 80 443 50051 ];
+  # networking.firewall.allowedUDPPorts = [ ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
