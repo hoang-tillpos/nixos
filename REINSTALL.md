@@ -27,9 +27,36 @@ Verify the git repo is pushed: `cd ~/nixos && git status && git push`.
 
 ---
 
-## 1. Boot the installer
+## 1. Download NixOS & flash the USB
 
-- Flash the **NixOS minimal ISO** to USB (`dd if=nixos-minimal-*.iso of=/dev/sdX bs=4M status=progress`) and boot it (UEFI mode).
+**Download** the minimal ISO (x86_64) from <https://nixos.org/download/#nixos-iso>:
+
+```bash
+cd ~/Downloads
+# grab the "Minimal ISO image" — 64-bit. Direct link pattern:
+wget https://channels.nixos.org/nixos-unstable/latest-nixos-minimal-x86_64-linux.iso
+```
+
+**Identify the USB drive** (be certain — the next step erases it):
+
+```bash
+lsblk -o NAME,SIZE,MODEL,TRAN         # find your USB, e.g. sdb (TRAN=usb)
+```
+
+**Wipe & flash the USB** (`sdX` = your USB device, NOT a partition like `sdX1`):
+
+```bash
+USB=/dev/sdb                          # <-- set to YOUR usb device
+sudo umount ${USB}?* 2>/dev/null      # unmount any mounted partitions
+sudo wipefs -a $USB                   # wipe existing filesystem signatures
+sudo dd if=nixos-minimal-*.iso of=$USB bs=4M conv=fsync status=progress
+sync
+```
+
+> `wipefs -a` clears old partition/FS signatures so the drive boots cleanly.
+> `conv=fsync` guarantees the write is flushed before `dd` returns.
+
+**Boot it:** plug into the target machine, enter the boot menu (usually `F12`/`F11`/`Esc`), and select the USB in **UEFI mode**.
 
 ## 2. Network
 
