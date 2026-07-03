@@ -7,23 +7,30 @@ Repo: `github.com/hoang-tillpos/nixos` · Flake target: `.#hle-nixos` · Disk: s
 
 ---
 
-## 0. Before you wipe — backup checklist
+## 0. Before you wipe — back up to Google Drive
 
-These live *outside* the repo and are gone after a wipe. Copy to an external drive or gdrive.
+State that lives *outside* the repo (Claude sessions, SSH/GPG keys, browser profile) is gone
+after a wipe. Push it to your existing `hoang` remote, inside the already-synced dev folder
+at `hoang:dev/_reinstall-backup/`, by running:
 
 ```bash
-# Secrets & identity (NOT in the repo)
-cp ~/.config/rclone/rclone.conf   /path/to/backup/   # gdrive OAuth token (rclone sync needs it)
-cp -r ~/.ssh                      /path/to/backup/   # SSH keys
-gpg --export-secret-keys --armor  > /path/to/backup/gpg-secret.asc   # if you use GPG
-
-# Anything not synced to gdrive already:
-#   ~/dev is bisync'd to gdrive (recoverable) — but push latest first:
-rclone bisync hoang:dev ~/dev --resilient
-#   Obsidian vault, browser profiles (~/.config/google-chrome), etc. — copy if not synced.
+cd ~/nixos && ./backup-gdrive.sh      # backs up ~/.claude, ~/.ssh, GPG, Chrome profile
+git status && git push                # and make sure the config repo is pushed
 ```
 
-Verify the git repo is pushed: `cd ~/nixos && git status && git push`.
+What it captures (see `backup-gdrive.sh`):
+- **`~/.claude`** — sessions, history, settings, MCP, plugins → restores your NAMED sessions
+  (e.g. `reinstall-nixos`); they resolve because home stays `/home/hle`.
+- **`~/.ssh`** + **GPG secret keys**, and the **Chrome profile** if present.
+- Latest **`~/dev`** is pushed first (bisync).
+
+> **Security note:** this uploads SSH/GPG private keys and Claude credentials to Drive in the
+> clear (your personal account). If that's not acceptable, encrypt them first, e.g.
+> `tar czf - ~/.ssh ~/.claude/.credentials.json | gpg -c > secrets.tgz.gpg` and upload that.
+
+> **rclone bootstrap:** you can't read Drive until rclone is authed, so don't rely on a
+> backed-up `rclone.conf` (chicken-and-egg). On the fresh system you re-create the `hoang`
+> remote once with `rclone config` (browser OAuth) — see §8.
 
 ---
 
@@ -172,25 +179,24 @@ sudo passwd hle
 sudo chown -R hle:users ~/nixos
 cd ~/nixos
 
-# Restore secrets from your backup drive
-mkdir -p ~/.config/rclone ~/.ssh
-cp /path/to/backup/rclone.conf ~/.config/rclone/
-cp -r /path/to/backup/.ssh/*   ~/.ssh/ && chmod 600 ~/.ssh/id_*
-gpg --import /path/to/backup/gpg-secret.asc      # if used
+# 1. Re-auth rclone to gdrive ONCE (no rclone.conf yet on a fresh system).
+#    In `rclone config`: n (new) -> name it EXACTLY "hoang" -> "drive" -> browser OAuth.
+rclone config
 
-# Set git identity (commented out in home.nix, so set it manually)
-git config --global user.name  "Hoang Le"
-git config --global user.email "hoang.l@oolio.com"
+# 2. Restore everything + seed the ~/dev sync (Claude state, SSH, GPG, git identity, timer)
+./restore-gdrive.sh
 
-# Wire up dotfiles (hypr, waybar, fish, nvim, swaync, wlogout, alacritty)
-# NOTE: linkconfig.sh rm -rf's ~/.config/<name> then symlinks it to the repo.
+# 3. Wire up dotfiles (hypr, waybar, fish, nvim, swaync, wlogout, alacritty)
+#    NOTE: linkconfig.sh rm -rf's ~/.config/<name> then symlinks it to the repo.
 bash linkconfig.sh
-
-# Re-pull your dev workspace from gdrive
-rclone bisync hoang:dev ~/dev --resilient --create-empty-src-dirs
-# (the systemd user timer 'rclone-gdrive-sync' takes over from here — check with:)
-systemctl --user status rclone-gdrive-sync.timer
 ```
+
+`restore-gdrive.sh` pulls `~/.claude`, `~/.ssh` (fixes perms), GPG keys, sets git identity,
+seeds the `~/dev` bisync with `--resync` (required on first run), and enables the sync timer.
+
+> **Named sessions:** with `~/.claude` restored and home unchanged at `/home/hle`, Claude Code
+> resolves the same project paths — `reinstall-nixos` and your other named sessions reappear.
+> Re-run `/login` in Claude Code if the restored credentials don't authenticate.
 
 ---
 
