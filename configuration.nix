@@ -13,7 +13,9 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
+      # Kept in-repo (copied from /etc/nixos on install) so the flake is self-contained
+      # and no --impure flag is needed. See REINSTALL.md.
+      ./hardware-configuration.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
@@ -26,7 +28,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "hle-nixos"; # Define your hostname. Matches the flake attribute .#hle-nixos.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -35,6 +37,9 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  # RAM-compressed swap (no swap partition on disk). See REINSTALL.md.
+  zramSwap.enable = true;
 
   # Set your time zone.
   time.timeZone = "Australia/Melbourne";
