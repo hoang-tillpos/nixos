@@ -46,15 +46,47 @@ lsblk -o NAME,SIZE,MODEL,TRAN         # find your USB, e.g. sdb (TRAN=usb)
 **Wipe & flash the USB** (`sdX` = your USB device, NOT a partition like `sdX1`):
 
 ```bash
-USB=/dev/sdb                          # <-- set to YOUR usb device
+USB=/dev/sda                          # <-- set to YOUR usb device (verify with lsblk above!)
 sudo umount ${USB}?* 2>/dev/null      # unmount any mounted partitions
 sudo wipefs -a $USB                   # wipe existing filesystem signatures
-sudo dd if=nixos-minimal-*.iso of=$USB bs=4M conv=fsync status=progress
+sudo dd if=latest-nixos-minimal-x86_64-linux.iso of=$USB bs=4M conv=fsync status=progress
 sync
 ```
 
 > `wipefs -a` clears old partition/FS signatures so the drive boots cleanly.
 > `conv=fsync` guarantees the write is flushed before `dd` returns.
+
+**Validate the flash** (do at least the first two):
+
+> If you opened a **new shell** since flashing, re-set the variables — they don't persist:
+> `USB=/dev/sda` and `ISO=latest-nixos-minimal-x86_64-linux.iso`
+
+```bash
+USB=/dev/sda                                   # <-- your usb device
+ISO=latest-nixos-minimal-x86_64-linux.iso
+
+# 0. Desktops auto-mount the new partitions; detach them before checking
+sudo umount ${USB}?* 2>/dev/null
+
+# 1. Confirm the ISO's partitions landed on the USB
+lsblk $USB                     # expect 2 partitions (main ~1.6G + small EFI ~3M)
+sudo blkid ${USB}*             # expect sda1 TYPE="iso9660" and sda2 vfat/EFI
+
+# 2. Byte-for-byte compare against the ISO (strongest correctness check)
+sudo cmp -n "$(stat -c%s $ISO)" "$ISO" "$USB" && echo "USB matches ISO OK"
+#    -n limits the compare to the ISO's size (the USB is larger); silence + exit 0 = match.
+
+# 3. (Optional) prove it actually BOOTS in a UEFI VM — no reboot needed.
+#    Boot the ISO *file* (user-readable, no root). Since step 2 proved USB == ISO
+#    byte-for-byte, booting the file is equivalent proof the USB boots.
+nix-shell -p qemu_kvm OVMF --run "qemu-system-x86_64 \
+  -machine q35 -m 2048 \
+  -drive if=pflash,format=raw,readonly=on,file=$(nix-build '<nixpkgs>' -A OVMF.fd --no-out-link)/FV/OVMF.fd \
+  -drive format=raw,file=$ISO"
+#    A NixOS boot menu appearing in the QEMU window = it's bootable.
+#    To boot the raw USB device instead, use file=$USB and prefix with `sudo -E`
+#    (QEMU needs root to open /dev/sda).
+```
 
 **Boot it:** plug into the target machine, enter the boot menu (usually `F12`/`F11`/`Esc`), and select the USB in **UEFI mode**.
 
