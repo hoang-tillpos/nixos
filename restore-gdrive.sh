@@ -7,6 +7,8 @@ set -euo pipefail
 REMOTE="hoang"
 # Backup lives inside the dev folder (same remote you already use for the ~/dev sync).
 BACKUP="${REMOTE}:dev/_reinstall-backup"
+# Force overwrite: --ignore-times re-transfers every file even if size/modtime match.
+FORCE="--ignore-times"
 info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m!!\033[0m  %s\n' "$*"; }
 
@@ -23,14 +25,15 @@ fi
 info "Verifying access to ${BACKUP} ..."
 rclone lsd "${BACKUP}" >/dev/null
 
-# 2. Claude Code state -> restores your named sessions (home unchanged at /home/hle)
+# 2. Claude Code state -> restores your named sessions (home unchanged at /home/hle).
+#    --links recreates the skills/* symlinks from their .rclonelink placeholders.
 info "Restoring ~/.claude ..."
-rclone copy "${BACKUP}/claude" "${HOME}/.claude" -P
+rclone copy "${BACKUP}/claude" "${HOME}/.claude" -P ${FORCE} --links
 
 # 3. SSH keys (fix perms after copy)
 if rclone lsd "${BACKUP}/ssh" >/dev/null 2>&1; then
   info "Restoring ~/.ssh ..."
-  rclone copy "${BACKUP}/ssh" "${HOME}/.ssh" -P
+  rclone copy "${BACKUP}/ssh" "${HOME}/.ssh" -P ${FORCE}
   chmod 700 "${HOME}/.ssh"
   chmod 600 "${HOME}"/.ssh/id_* 2>/dev/null || true
 fi
@@ -39,7 +42,7 @@ fi
 if rclone lsf "${BACKUP}" 2>/dev/null | grep -qx "gpg-secret.asc"; then
   info "Importing GPG secret key ..."
   tmp="$(mktemp -d)"
-  rclone copy "${BACKUP}/gpg-secret.asc" "${tmp}" -P
+  rclone copy "${BACKUP}/gpg-secret.asc" "${tmp}" -P ${FORCE}
   gpg --import "${tmp}/gpg-secret.asc" || warn "gpg import failed (continuing)"
   shred -u "${tmp}/gpg-secret.asc"; rmdir "${tmp}"
 fi
