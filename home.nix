@@ -185,40 +185,6 @@
     nix-direnv.enable = true;
   };
 
-  programs.vscode = {
-    enable = true;
-    package = pkgs.vscode.fhs;
-    profiles.default.extensions = with pkgs.vscode-extensions; [
-      golang.go
-      dbaeumer.vscode-eslint
-      esbenp.prettier-vscode
-      bierner.markdown-mermaid
-      yzhang.markdown-all-in-one
-      sumneko.lua
-      ms-pyright.pyright
-      # ms-python.vscode-pylance  # Commented out due to download issues - Pyright provides similar functionality
-      ms-python.black-formatter
-      njpwerner.autodocstring
-      skyapps.fish-vscode
-      mads-hartmann.bash-ide-vscode
-      davidanson.vscode-markdownlint
-      graphql.vscode-graphql-syntax
-      redhat.vscode-yaml
-      bbenoist.nix
-      wholroyd.jinja
-      github.github-vscode-theme
-      # codeium
-    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-    #  {
-    #     name = "codeium";
-    #     publisher = "Codeium";
-    #     version = "1.14.1";
-    #     sha256 = "sha256-aUEXL6JNpOncqdDyReaG7C7+mmNPC+mDuAsBeabTLeE=";
-    #  }
-    ];
-
-  };
-
   #configuring xsession + i3
   #xsession = {
    # enable = true;
