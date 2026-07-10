@@ -128,7 +128,7 @@
   users.users.hle = {
     isNormalUser = true;
     description = "hle";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "kvm" ];
     packages = with pkgs; [
       firefox
     #  kate
@@ -151,6 +151,7 @@
     wget
     curl
     android-studio
+    android-tools
     #hyprland stuff
     wireplumber
     xdg-desktop-portal-hyprland
