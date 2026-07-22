@@ -42,6 +42,7 @@
     git
     go
     python312
+    uv # fast Python package/env manager
     bun
     lazygit
     nodejs
@@ -49,12 +50,14 @@
     openssl
     rclone  # Google Drive sync
     jwt-cli # JWT decode/encode
+    poppler-utils # PDF tools (pdftotext, pdftoppm, etc.) for Claude to read PDFs
+    pandoc
     
     
     #dev stuff
     awscli2
     kubectl
-    
+
     #terminals
     fish
     alacritty
@@ -110,6 +113,8 @@
     eza # A modern replacement for ‘ls’
     fzf # A command-line fuzzy finder
     fd # find files for neovim telescope
+    ast-grep # structural code search/rewrite (AST-aware grep)
+    difftastic # syntax-aware diff
     unar #the unzip
 
     # networking tools
