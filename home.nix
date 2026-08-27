@@ -41,19 +41,19 @@
     # scripting and run-time
     git
     go
-    python312
+    (python313.withPackages (ps: with ps; [ boto3 botocore ]))
     uv # fast Python package/env manager
     bun
     lazygit
     nodejs
     yarn-berry
     openssl
-    rclone  # Google Drive sync
+    rclone # Google Drive sync
     jwt-cli # JWT decode/encode
     poppler-utils # PDF tools (pdftotext, pdftoppm, etc.) for Claude to read PDFs
     pandoc
-    
-    
+    mermaid-cli
+
     #dev stuff
     awscli2
     kubectl
@@ -63,11 +63,11 @@
     alacritty
     starship
     #bash
-    #warp-terminal 
-    
+    #warp-terminal
+
     # hyprland stuff
     waybar
-    wlogout 
+    wlogout
     hyprlock
     hyprshot
     swaynotificationcenter
@@ -75,7 +75,6 @@
     pavucontrol
     libnotify
     pamixer
-    
 
     # code editor
     #vscode
@@ -84,16 +83,16 @@
     obsidian
     gh
     insomnia
-    
+
     #comms
     slack
-    
+
     #browser
     # google-chrome
-    
+
     #
     libreoffice
- 
+
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
 
@@ -115,17 +114,17 @@
     fd # find files for neovim telescope
     ast-grep # structural code search/rewrite (AST-aware grep)
     difftastic # syntax-aware diff
-    unar #the unzip
+    unar # the unzip
 
     # networking tools
     mtr # A network diagnostic tool
     iperf3
-    dnsutils  # `dig` + `nslookup`
+    dnsutils # `dig` + `nslookup`
     ldns # replacement of `dig`, it provide the command `drill`
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
-    ipcalc  # it is a calculator for the IPv4/v6 addresses
+    ipcalc # it is a calculator for the IPv4/v6 addresses
 
     # misc
     cowsay
@@ -148,7 +147,7 @@
     hugo # static site generator
     glow # markdown previewer in terminal
 
-    btop  # replacement of htop/nmon
+    btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
 
@@ -163,11 +162,11 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
-    
+
     #hyprland stuff
     wofi
-    # 
-    
+    #
+
   ];
 
   programs.bash = {
@@ -184,7 +183,6 @@
     '';
   };
 
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -192,10 +190,9 @@
 
   #configuring xsession + i3
   #xsession = {
-   # enable = true;
-    #windowManager.command = "i3";
+  # enable = true;
+  #windowManager.command = "i3";
   #};
-  
 
   # basic configuration of git, please change to your own
   #programs.git = {
@@ -232,19 +229,19 @@
   #};
 
   #programs.bash = {
-    #enable = true;
-    #enableCompletion = true;
-    # TODO add your custom bashrc here
-    #bashrcExtra = ''
-    #  export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-    #'';
+  #enable = true;
+  #enableCompletion = true;
+  # TODO add your custom bashrc here
+  #bashrcExtra = ''
+  #  export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+  #'';
 
-    # set some aliases, feel free to add more or remove some
-    #shellAliases = {
-    #  #k = "kubectl";
-    #  urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
-    #  urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
-    #};
+  # set some aliases, feel free to add more or remove some
+  #shellAliases = {
+  #  #k = "kubectl";
+  #  urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
+  #  urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
+  #};
   #};
 
   # Google Drive sync with rclone
@@ -286,7 +283,6 @@
   # You can update home Manager without changing this value. See
   # the home Manager release notes for a list of state version
   # changes in each release.
-
 
   home.stateVersion = "26.05";
 

@@ -54,7 +54,9 @@
         #
         ({ pkgs, ... }: {
           nixpkgs.config.android_sdk.accept_license = true;
-          nixpkgs.overlays = [ fenix.overlays.default ];
+          nixpkgs.overlays = [
+            fenix.overlays.default
+          ];
           environment.systemPackages = with pkgs; [
             (fenix.packages.x86_64-linux.complete.withComponents [
               "cargo"
